@@ -1,5 +1,4 @@
 export interface Event {
-  id: bigint,
   title: string,
   location: string;
   price: number;

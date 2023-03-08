@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import {EventService} from "./service/event.service";
+import {Component, ViewChild} from '@angular/core';
+import {HttpService} from "./service/http.service";
+import {EventsStatListComponent} from "./components/events-stat-list/events-stat-list.component";
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,11 @@ import {EventService} from "./service/event.service";
 })
 export class AppComponent {
   title = 'Tickets';
+  @ViewChild("eventStats") stats!: EventsStatListComponent;
 
   constructor() {}
 
   updateEventStats() {
-
+    this.stats.fetchEvents();
   }
-
-
 }

@@ -1,6 +1,4 @@
-package com.app.tickets.dal;
-
-import com.app.tickets.entity.Event;
+package com.app.tickets.dao;
 
 import java.util.Collection;
 import java.util.Optional;

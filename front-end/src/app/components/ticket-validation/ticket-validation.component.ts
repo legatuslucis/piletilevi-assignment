@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import {EventService} from "../../service/event.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {Component, EventEmitter, Output} from '@angular/core';
+import {HttpService} from "../../service/http.service";
 
 @Component({
   selector: 'app-ticket-validation',
@@ -10,22 +9,26 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 export class TicketValidationComponent {
 
   barcode: string = "";
-  placeholderWarning: string | undefined;
+  warning: string | undefined;
 
-  constructor(private service: EventService) {}
+  @Output("change") updateEvent = new EventEmitter<void>();
+
+  constructor(private service: HttpService) {}
 
   onSubmit(): void {
     this.service.validateTicket(this.barcode).subscribe(
       {
-        next: () => this.warningMessage = "Ticket is validated",
-        error: (e) => this.warningMessage = e.error
+        next: () => {
+          this.setWarningLabel("Success")
+          this.updateEvent.emit();
+        },
+        error: (e) => this.setWarningLabel(e.error)
       })
+    this.barcode = "";
   }
 
-  setWarningPlaceholder(warning: String): void {
-    this.placeholderWarning = warning;
-    setTimeout(function() {
-      that.placeholdeWarning = undefined;
-    }, 5000);
+  setWarningLabel(warning: string): void {
+    this.warning = warning;
+    setTimeout( () => this.warning = undefined, 4000)
   }
 }

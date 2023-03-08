@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Getter
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ValidatonCodeNotFoundException extends Exception {
+public class CodeNotFoundValidationException extends Exception {
     private final String message;
-    public ValidatonCodeNotFoundException(String message) {
+    public CodeNotFoundValidationException(String message) {
         this.message = message;
     }
 

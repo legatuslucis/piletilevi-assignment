@@ -1,4 +1,4 @@
-package com.app.tickets.dal.mapper;
+package com.app.tickets.dao.mapper;
 
 import com.app.tickets.entity.Event;
 import org.springframework.jdbc.core.RowMapper;

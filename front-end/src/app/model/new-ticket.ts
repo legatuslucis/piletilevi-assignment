@@ -1,4 +1,5 @@
 export interface NewTicket {
-  eventId: bigint;
+  eventId: number;
   validationCode: string;
+  ticketStatusId: number;
 }

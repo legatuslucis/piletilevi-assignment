@@ -4,11 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
-public class NewTicketDto {
-    private Long eventId;
-    private String validationCode;
-    private Long ticketStatusId;
+public class NewTicketsListDto {
+    private List<NewTicketDto> tickets;
 }

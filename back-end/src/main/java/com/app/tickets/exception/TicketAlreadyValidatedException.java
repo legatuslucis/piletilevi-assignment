@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Getter
 @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-public class ValidationTicketNotSoldException extends Exception{
+public class TicketAlreadyValidatedException extends Exception{
     private final String message;
-    public ValidationTicketNotSoldException(String message) {
+    public TicketAlreadyValidatedException(String message) {
         this.message = message;
     }
 

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {EventService} from "../../service/event.service";
+import {HttpService} from "../../service/http.service";
 
 @Component({
   selector: 'app-events-stat-list',
@@ -13,7 +13,7 @@ export class EventsStatListComponent {
 
   readonly displayedColumns = ["date", "title", "price", "location",
     "type", "sold_tickets", "validated_tickets", "obtainable_tickets"]
-  constructor(private service: EventService) {}
+  constructor(private service: HttpService) {}
 
   ngOnInit() {
     this.fetchEvents();

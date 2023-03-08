@@ -1,10 +1,10 @@
-<div class="container">
+<div class="root">
   <div class="validation-load-form">
-    <app-tickets-input (update-events)="updateEventStats()"></app-tickets-input>
-    <app-ticket-validation></app-ticket-validation>
+    <app-tickets-input (change)="updateEventStats()"></app-tickets-input>
+    <app-ticket-validation (change)="updateEventStats()"></app-ticket-validation>
   </div>
   <div class="event-stats">
-    <app-events-stat-list></app-events-stat-list>
+    <app-events-stat-list #eventStats></app-events-stat-list>
   </div>
 </div>
 

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {NewTicket} from "../../model/new-ticket";
-import {EventService} from "../../service/event.service";
+import {HttpService} from "../../service/http.service";
 
 @Component({
   selector: 'app-tickets-input',
@@ -8,12 +8,10 @@ import {EventService} from "../../service/event.service";
   styleUrls: ['./tickets-input.component.css']
 })
 export class TicketsInputComponent {
-  csvFile : File | undefined;
-  warningMessage : string | undefined;
-  @Output("update-events") updateEvent = new EventEmitter<void>();
+  warning : string | undefined;
+  @Output("change") updateEvent = new EventEmitter<void>();
 
-  constructor(private service: EventService) {
-  }
+  constructor(private service: HttpService) {}
 
   validateExtension(file: File): boolean {
     let fileExtension = file.name.split(".").pop();
@@ -22,51 +20,59 @@ export class TicketsInputComponent {
 
   onFileSelected(event: any): void {
     if (this.validateExtension(event.target.files[0])) {
-      this.csvFile = event.target.files[0];
-      this.warningMessage = undefined;
+      this.submitFile(event.target.files[0]);
     } else {
-      this.warningMessage = "Invalid file format, please select a .csv file";
+      this.setWarning("Invalid file format");
     }
   }
 
-  onSubmit(): void {
+  submitFile(file: File): void {
     let parsedCsv: NewTicket[] = [];
-    if (this.csvFile === undefined) {
-      this.warningMessage = "Please select a .csv file";
-    } else {
-      let fileReader = new FileReader();
-      fileReader.readAsText(this.csvFile)
-      fileReader.onload = () => {
-        try {
-          parsedCsv = this.parseCsv(fileReader.result!.toString());
-        } catch (e) {
-          this.warningMessage = "File content is invalid";
-        }
+    let fileReader = new FileReader();
+    fileReader.readAsText(file);
+    fileReader.onload = () => {
+      try {
+        parsedCsv = this.parseCsv(fileReader.result!.toString());
+        this.loadTickets(parsedCsv);
+      } catch (e) {
+        this.setWarning("Invalid Content");
       }
-
-      this.service.loadNewTickets(parsedCsv).subscribe({
-        next: () => {
-          this.warningMessage = "Success";
-          this.updateEvent.emit();
-          this.csvFile = undefined;
-        },
-        error: (e) => this.warningMessage = e.error
-      });
     }
+  }
+
+  loadTickets(tickets: NewTicket[]) {
+    this.setWarning("Processing")
+    this.service.loadNewTickets(tickets).subscribe({
+      next: () => {
+        this.updateEvent.emit();
+        this.setWarning("Success")
+      },
+      error: (e) => {
+        this.setWarning(e.error)
+      }
+    });
   }
 
   parseCsv(csv: String): NewTicket[] {
     let newTickets: NewTicket[] = [];
-    let lines = csv.split("/n").slice(1);
-    lines.forEach((line) => {
+    let lines = csv.split(/\r?\n/);
+    lines.splice(1).forEach((line) => {
         let columns = line.split(",");
         let newTicket: NewTicket = {
-          eventId: BigInt(columns[0]),
-          validationCode: columns[1]
+          eventId: parseInt(columns[0]),
+          validationCode: columns[1],
+          ticketStatusId: parseInt(columns[2])
         };
         newTickets.push(newTicket);
     }
     )
     return newTickets;
+  }
+
+  setWarning(message: string): void {
+    this.warning=message;
+    setTimeout( () => {
+      this.warning=undefined
+    }, 2000);
   }
 }

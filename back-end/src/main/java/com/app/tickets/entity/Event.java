@@ -11,9 +11,10 @@ public class Event {
     private Long id;
     private String title;
     private String location;
-    private int price;
+    private Integer price;
     private Date date;
     private Long eventTypeId;
+
     public Event(EventBuilder builder) {
         this.id = builder.id;
         this.title = builder.title;

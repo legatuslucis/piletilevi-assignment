@@ -1,7 +1,7 @@
 package com.app.tickets.service;
 
-import com.app.tickets.dal.EventDao;
-import com.app.tickets.dal.TicketDao;
+import com.app.tickets.dao.EventDao;
+import com.app.tickets.dao.TicketDao;
 import com.app.tickets.dto.EventDto;
 import com.app.tickets.entity.Event;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +23,18 @@ public class EventsService {
         Optional<Integer> validatedTickets = ticketDao.countValidatedTickets(event.getId());
         Optional<Integer> obtainableTickets = ticketDao.countObtainableTickets(event.getId());
 
-        return new EventDto.EventDtoBuilder()
-                .setId(event.getId())
-                .setTitle(event.getTitle())
-                .setType(type)
-                .setPrice(event.getPrice())
-                .setDate(event.getDate())
-                .setLocation(event.getLocation())
-                .setObtainableTickets(obtainableTickets.orElse(0))
-                .setSoldTickets(soldTickets.orElse(0))
-                .setValidatedTickets(validatedTickets.orElse(0))
-                .build();
+        EventDto eventDto = new EventDto();
+        eventDto.setId(event.getId());
+        eventDto.setTitle(event.getTitle());
+        eventDto.setDate(event.getDate());
+        eventDto.setLocation(event.getLocation());
+        eventDto.setPrice(event.getPrice());
+        eventDto.setObtainableTickets(obtainableTickets.orElse(0));
+        eventDto.setValidatedTickets(validatedTickets.orElse(0));
+        eventDto.setSoldTickets(soldTickets.orElse(0));
+        eventDto.setType(type);
+
+        return eventDto;
     }
 
     EventsService(@Autowired EventDao eventDao, @Autowired TicketDao ticketDao) {
