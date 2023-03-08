@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet  id="create-ticket-status"  author="Kirill Fomin">
+        <preConditions>
+            <not>
+                <tableExists tableName="ticket_status"/>
+            </not>
+        </preConditions>
+        <createTable  tableName="ticket_status">
+            <column  name="id"  type="int">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="name"  type="varchar(255)">
+                <constraints  nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet  id="create-event-type"  author="Kirill Fomin">
+        <preConditions>
+            <not>
+                <tableExists tableName="event_type"/>
+            </not>
+        </preConditions>
+        <createTable  tableName="event_type">
+            <column  name="id"  type="int">
+                <constraints  primaryKey="true"  nullable="false"/>
+            </column>
+            <column  name="name"  type="varchar(255)">
+                <constraints  nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="init-event-types" author="Kirill Fomin">
+        <insert tableName="event_type">
+            <column name="id" value="0"/>
+            <column name="name" value="Music"/>
+        </insert>
+        <insert tableName="event_type">
+            <column name="id" value="1"/>
+            <column name="name" value="Theatre"/>
+        </insert>
+        <insert tableName="event_type">
+            <column name="id" value="2"/>
+            <column name="name" value="Sports"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="init-ticket-states" author="Kirill Fomin">
+        <insert tableName="ticket_status">
+            <column name="id" value="0"/>
+            <column name="name" value="Obtainable"/>
+        </insert>
+        <insert tableName="ticket_status">
+            <column name="id" value="1"/>
+            <column name="name" value="Sold"/>
+        </insert>
+        <insert tableName="ticket_status">
+            <column name="id" value="2"/>
+            <column name="name" value="Validated"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

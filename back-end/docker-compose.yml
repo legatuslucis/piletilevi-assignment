@@ -1,0 +1,16 @@
+version: "3.5"
+
+# test MySQL db with docker-compose --> docker-compose up -d  ;)
+
+services:
+  database:
+    restart: always
+    image: mysql:latest
+    container_name: tickets-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: tickets-db
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: root

@@ -1,0 +1,16 @@
+<div class="container">
+  <input type="file" hidden (change)="onFileSelected($event)" #fileInput>
+  <div class="buttons">
+    <button mat-raised-button (click)="fileInput.click()">
+    <span *ngIf="csvFile !== undefined else elseBlock">
+      Selected: {{csvFile.name}}
+    </span>
+      <ng-template #elseBlock>
+        Select .csv file
+      </ng-template>
+    </button>
+    <div *ngIf="csvFile !== undefined">
+      <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+    </div>
+  </div>
+</div>

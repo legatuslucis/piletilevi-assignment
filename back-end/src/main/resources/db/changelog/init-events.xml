@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="init-event-data" author="Kirill Fomin">
+        <insert tableName="event">
+            <column name="title" value="Staadionikontsert"/>
+            <column name="price" value="37"/>
+            <column name="date" value="2023-08-19 19:00:00"/>
+            <column name="location" value="A. Le Coq Arena"/>
+            <column name="event_type_id" value="0"/>
+        </insert>
+        <insert tableName="event">
+            <column name="title" value="Sünnipäevapidu"/>
+            <column name="price" value="31"/>
+            <column name="date" value="2023-06-10 18:00:00"/>
+            <column name="location" value="Tallinna Linnateater"/>
+            <column name="event_type_id" value="1"/>
+        </insert>
+        <insert tableName="event">
+            <column name="title" value="WRC Rally Estonia 2023"/>
+            <column name="price" value="16"/>
+            <column name="date" value="2023-07-20 8:00:00"/>
+            <column name="location" value="Rally Estonia, Tartu"/>
+            <column name="event_type_id" value="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
